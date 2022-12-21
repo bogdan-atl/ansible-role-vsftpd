@@ -1,0 +1,17 @@
+---
+# tasks file for vsftpd
+- name: Install vsftpd
+  apt: name={{ item }} state=latest update_cache=yes
+  loop: ['vsftpd'] 
+
+- name: Install configuration file
+  template:
+      src:   etc_vsftpd_vsftp.conf.j2
+      dest: /etc/vsftpd.conf
+      mode: '0600'
+
+- name: start and enable mysql service
+  service:
+      name: vsftpd
+      state: started
+      enabled: yes
